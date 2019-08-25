@@ -352,6 +352,12 @@ def set_hooks_commit_msg(remote, target_file):
                            % (userhost, (":%s" % port) if port else "")
                 print("Fetching commit hook from: %s" % hook_url)
             run_command_exc(CannotInstallHook, *cmd)
+        # If there are submodules, the hook needs to be installed into
+        # each of them.
+        run_command_exc(
+            CannotInstallHook,
+            "git", "submodule", "foreach",
+            'cp -p %s "$(git rev-parse --git-dir)/hooks/"' % target_file)
 
     if not os.access(target_file, os.X_OK):
         os.chmod(target_file, os.path.stat.S_IREAD | os.path.stat.S_IEXEC)
