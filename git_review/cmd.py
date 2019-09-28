@@ -1423,8 +1423,6 @@ review.
 
     parser.add_argument("--reviewers", nargs="+",
                         help="Add reviewers to uploaded patch sets.")
-    parser.add_argument("-D", "--draft", dest="draft", action="store_true",
-                        help="Submit review as a draft")
     parser.add_argument("-n", "--dry-run", dest="dry", action="store_true",
                         help="Don't actually submit the branch for review")
     parser.add_argument("-i", "--new-changeid", dest="regenerate",
@@ -1553,7 +1551,6 @@ review.
     parser.add_argument("branch", nargs="?")
 
     parser.set_defaults(dry=False,
-                        draft=False,
                         verbose=False,
                         update=False,
                         setup=False,
@@ -1660,11 +1657,6 @@ review.
     assert_one_change(remote, branch, yes, have_hook)
 
     ref = "for"
-
-    if options.draft:
-        ref = "drafts"
-        if options.custom_script:
-            run_custom_script("draft")
 
     cmd = ("git push --no-follow-tags %s HEAD:refs/%s/%s" %
            (remote, ref, branch))

@@ -161,8 +161,6 @@ Indicate that you do, in fact, understand if you are submitting more than
 one patch.
 .It Fl v , Fl \-verbose
 Turns on more verbose output.
-.It Fl D , Fl \-draft
-Submit review as a draft. Requires Gerrit 2.3 or newer.
 .It Fl R , Fl \-no\-rebase
 Do not automatically perform a rebase before submitting the change to
 Gerrit.
@@ -178,7 +176,7 @@ Enable or disable a color output. Default is "auto".
 Same thing as \-\-color=never.
 .It Fl \-no\-custom\-script
 Do not run scripts, installed as hooks/{action}-review, where action
-is one of "pre", "draft", or "post".
+is one of "pre" or "post".
 .It Fl \-track
 Choose the branch to submit the change against (and, if
 rebasing, to rebase against) from the branch being tracked

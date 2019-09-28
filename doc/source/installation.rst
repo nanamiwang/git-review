@@ -101,7 +101,5 @@ The name of the script is $action-review where action can be:
 
 * post - run at the end after the review was sent.
 
-* draft - run when in draft mode.
-
 If the script returns with an exit status different than zero, git-review will
 exit with the custom shell exit code ``71``.
