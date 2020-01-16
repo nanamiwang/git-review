@@ -14,3 +14,5 @@ ChangeLog
 *.pyc
 doc/build
 .stestr
+RELEASENOTES.rst
+releasenotes/notes/reno.cache
