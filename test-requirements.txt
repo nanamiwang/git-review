@@ -1,4 +1,4 @@
-hacking>=0.10.0,<0.11
+hacking>=2.0.0,<2.1.0
 mock
 fixtures>=0.3.14
 stestr>=2.2.0

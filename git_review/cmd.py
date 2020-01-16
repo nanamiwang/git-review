@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
+
+# Copyright (C) 2011-2020 OpenStack LLC.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License.  You may obtain
+# a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+
 from __future__ import print_function
-
-COPYRIGHT = """\
-Copyright (C) 2011-2012 OpenStack LLC.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-implied.
-
-See the License for the specific language governing permissions and
-limitations under the License."""
 
 import argparse
 import datetime
@@ -48,6 +46,24 @@ USER_CONFIG = os.path.join(CONFIGDIR, "git-review.conf")
 DEFAULTS = dict(scheme='ssh', hostname=False, port=None, project=False,
                 branch='master', remote="gerrit", rebase="1",
                 track="0", usepushurl="0")
+COPYRIGHT = """\
+Copyright (C) 2011-2020 OpenStack LLC.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
 
 _branch_name = None
 _has_color = None
@@ -469,8 +485,8 @@ def alias_url(url, rewrite_push):
         # there is a longer insteadOf alias.
         longest = None
         for alias in rewrites:
-            if (url.startswith(alias)
-                    and (longest is None or len(longest) < len(alias))):
+            if url.startswith(alias) and (
+                    longest is None or len(longest) < len(alias)):
                 longest = alias
 
         if longest:
@@ -1183,7 +1199,7 @@ def fetch_review(review, masterbranch, remote, project):
     except KeyError:
         topic = review
     try:
-        author = re.sub('\W+', '_', review_info['owner']['name']).lower()
+        author = re.sub(r'\W+', '_', review_info['owner']['name']).lower()
     except KeyError:
         author = 'unknown'
     remote_branch = review_info['branch']
@@ -1216,7 +1232,7 @@ def checkout_review(branch_name, remote, remote_branch):
                             branch_name)
 
     except CheckoutNewBranchFailed as e:
-        if re.search("already exists\.?", e.output):
+        if re.search(r"already exists\.?", e.output):
             print("Branch %s already exists - reusing" % branch_name)
             track_remote, track_branch = parse_tracking(
                 ref='refs/heads/' + branch_name)
@@ -1389,7 +1405,14 @@ class _DownloadFlag(argparse.Action):
 def _main():
     usage = "git review [OPTIONS] ... [BRANCH]"
 
-    parser = argparse.ArgumentParser(usage=usage, description=COPYRIGHT)
+    description = """\
+A git command for submitting branches to Gerrit.
+
+git-review is a tool that helps submitting git branches to gerrit for
+review.
+"""
+
+    parser = argparse.ArgumentParser(usage=usage, description=description)
 
     topic_arg_group = parser.add_mutually_exclusive_group()
     topic_arg_group.add_argument("-t", "--topic", dest="topic",
@@ -1707,7 +1730,7 @@ def main():
         # would report utf-8
         # see: https://stackoverflow.com/a/23847316/99834
         stdin, stdout, stderr = sys.stdin, sys.stdout, sys.stderr
-        reload(sys)
+        reload(sys)  # noqa
         sys.stdin, sys.stdout, sys.stderr = stdin, stdout, stderr
         sys.setdefaultencoding(os.environ.get('PYTHONIOENCODING', 'utf-8'))
 

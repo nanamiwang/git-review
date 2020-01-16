@@ -18,6 +18,22 @@ import subprocess
 import traceback
 
 
+GERRIT_CONF_TMPL = """
+[gerrit]
+    basePath = git
+    canonicalWebUrl = http://nonexistent/
+[database]
+    type = h2
+    database = db/ReviewDB
+[auth]
+    type = DEVELOPMENT_BECOME_ANY_ACCOUNT
+[sshd]
+    listenAddress = %s:%s
+[httpd]
+    listenUrl = http://%s:%s/
+"""
+
+
 def run_cmd(*args, **kwargs):
     """Run command and check the return code."""
     preexec_fn = None
@@ -63,21 +79,6 @@ def write_to_file(path, content):
     """Create (if does not exist) and write to the file."""
     with open(path, 'wb') as file_:
         file_.write(content)
-
-GERRIT_CONF_TMPL = """
-[gerrit]
-    basePath = git
-    canonicalWebUrl = http://nonexistent/
-[database]
-    type = h2
-    database = db/ReviewDB
-[auth]
-    type = DEVELOPMENT_BECOME_ANY_ACCOUNT
-[sshd]
-    listenAddress = %s:%s
-[httpd]
-    listenUrl = http://%s:%s/
-"""
 
 
 def get_gerrit_conf(ssh_addr, ssh_port, http_addr, http_port):

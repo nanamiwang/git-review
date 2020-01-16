@@ -20,6 +20,13 @@ import stat
 import struct
 import sys
 
+import fixtures
+import requests
+import testtools
+from testtools import content
+
+from git_review.tests import utils
+
 if sys.version < '3':
     import urllib
     import urlparse
@@ -29,12 +36,6 @@ else:
     import urllib.request
     urlparse = urllib.parse.urlparse
 
-import fixtures
-import requests
-import testtools
-from testtools import content
-
-from git_review.tests import utils
 
 WAR_URL = 'http://tarballs.openstack.org/' \
           'ci/gerrit/gerrit-v2.11.4.13.cb9800e.war'

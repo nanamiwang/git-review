@@ -287,8 +287,8 @@ class GitReviewTestCase(tests.BaseGitReviewTestCase):
 
         br_out = self._run_git('checkout',
                                '-b', 'test_branch', 'origin/maint')
-        expected_track = ".*\nBranch '?test_branch'? set up to track remote" + \
-                         " branch '?maint'? from '?origin'?."
+        expected_track = (".*\nBranch '?test_branch'? set up to track remote "
+                          "branch '?maint'? from '?origin'?.")
         track_matcher = testtools.matchers.MatchesRegex(expected_track)
         self.assertThat(br_out, track_matcher)
         branches = self._run_git('branch', '-a')

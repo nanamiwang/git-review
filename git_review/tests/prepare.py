@@ -22,5 +22,6 @@ def main():
     helpers.ensure_gerrit_war()
     helpers.init_gerrit()
 
+
 if __name__ == "__main__":
     main()
