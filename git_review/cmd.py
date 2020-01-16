@@ -1436,6 +1436,10 @@ review.
                         action="store_true",
                         help="Use remote push-url logic instead of separate"
                              " remotes")
+    parser.add_argument('--notify',
+                        choices=['NONE', 'OWNER', 'OWNER_REVIEWERS', 'ALL'],
+                        help="Control to whom email notifications are sent,"
+                             " defaults to ALL.")
 
     rebase_group = parser.add_mutually_exclusive_group()
     rebase_group.add_argument("-R", "--no-rebase", dest="rebase",
@@ -1703,6 +1707,9 @@ review.
 
     if options.remove_private:
         push_options.append('remove-private')
+
+    if options.notify is not None:
+        push_options.append("notify=%s" % options.notify)
 
     if push_options:
         cmd += "%" + ",".join(push_options)
