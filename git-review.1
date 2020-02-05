@@ -42,6 +42,7 @@
 .Op Fl r Ar remote
 .Op Fl t Ar topic
 .Op Fl \-reviewers Ar reviewer ...
+.Op Fl \-notify Ar type
 .Op Ar branch
 .Nm
 .Fl l
@@ -152,6 +153,8 @@ If not specified, a bug number from the commit summary will be used. Alternative
 Submit review without topic.
 .It Fl \-reviewers Ar reviewer ...
 Subscribe one or more reviewers to the uploaded patch sets.  Reviewers should be identifiable by Gerrit (usually use their Gerrit username or email address).
+.It Fl \-notify Ar type
+Control to whom email notifications are sent.  Possible values are NONE, OWNER, OWNER_REVIEWERS, ALL (the last one is the default).
 .It Fl u , Fl \-update
 Skip cached local copies and force updates from network resources.
 .It Fl l , Fl \-list

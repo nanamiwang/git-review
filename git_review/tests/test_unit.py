@@ -18,6 +18,7 @@
 import argparse
 import functools
 import os
+import sys
 import textwrap
 
 import fixtures
@@ -364,6 +365,19 @@ class GitReviewUnitTest(testtools.TestCase):
         check_remote.side_effect = Exception()
         self.assertRaises(Exception, cmd._main)
         self.assertTrue(resolve_tracking.called)
+
+    @mock.patch('sys.argv', ['argv0', '-n', '--notify', 'OWNER'])
+    @mock.patch('git_review.cmd.check_remote')
+    @mock.patch('git_review.cmd.rebase_changes')
+    @mock.patch('git_review.cmd.set_hooks_commit_msg')
+    @mock.patch('git_review.cmd.assert_one_change')
+    @mock.patch('sys.stdout', io.StringIO())
+    @mock.patch('sys.exit')
+    def test_notify(self, check_remote, rebase, set_hooks, assert_one, exit):
+        cmd._main()
+        sys.stdout.seek(0)
+        stdout = sys.stdout.read()
+        self.assertIn("notify=OWNER", stdout)
 
 
 class DownloadFlagUnitTest(testtools.TestCase):
