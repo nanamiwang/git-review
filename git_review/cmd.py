@@ -152,7 +152,7 @@ def run_command_status(*argv, **kwargs):
                          stdin=subprocess.PIPE if stdin else None,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT,
-                         env=newenv, universal_newlines=True)
+                         env=newenv, universal_newlines=True, encoding='utf-8')
     (out, nothing) = p.communicate(stdin)
     return (p.returncode, out.strip())
 
